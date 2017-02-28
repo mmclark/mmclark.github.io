@@ -1,0 +1,49 @@
+body {
+  padding: 10px;
+  background-color: silver;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+#weather-icon {
+  font-size: 48pt;  
+}
+
+#weather {
+  font-family: 'Josefin Sans', sans-serif;
+  border-radius: 30px;  
+  box-shadow: 20px 20px 18px 1px rgba(0,0,0,0.2);
+  background-color: ivory;
+  color: dimgray;
+}
+
+#weather-description {
+  font-size: 24pt;
+}
+
+#location-name {
+  font-size: 12pt;
+}
+
+
+#temperature {
+  font-size: 72pt;  
+}
+
+#temp-scale {
+  margin-top: 40px;
+  font-size: 12pt;
+}
+
+@media (min-width: 36em) {
+  .container {
+    max-width: 32rem;
+  }
+}
+
+#weather-icon {
+  font-size: 64pt;
+}
+
