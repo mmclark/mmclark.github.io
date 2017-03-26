@@ -32,7 +32,7 @@ if (navigator.geolocation) {
     var lat = pos.coords.latitude;
     var long = pos.coords.longitude;
     var owmk = "16fd6af4df03c8dc21623d105c13a957";
-    var api_url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + 
+    var api_url = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=" + lat + 
         "&lon=" + long +
         "&units=imperial" +
         "&appid=" + owmk;
