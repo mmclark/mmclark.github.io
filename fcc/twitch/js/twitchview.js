@@ -9,7 +9,8 @@ TWITCHY.Main = (function() {
           <div class="card"> \
             <div class="card-block">\
               <h3 class="card-title">{{STREAMTITLE}}</h3>\
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>\
+              <img  style="float:right; margin:1em;" src="{{STREAMIMAGE}}"  alt="Image for twitch stream"> \
+              <p class="card-text">{{STREAMTEXT}}</p>\
               <a href="#" class="btn btn-primary">Go somewhere</a>\
             </div>\
           </div>\
@@ -22,12 +23,50 @@ TWITCHY.Main = (function() {
   function listStreams() {
     console.log('listStreams ENTER');
     var url = proxy + apiurl + '/streams/featured';
+    var fccurl = proxy + apiurl + '/streams/freecodecamp';
+
+    $.getJSON(fccurl, function(data) {
+      console.log("fcc info---------------------------");
+      console.log(data);
+      if (data.stream === null) {
+	console.log("fcc is offline channel url:", data._links.channel);
+	$.getJSON(proxy+apiurl+'/channels/freecodecamp', function(data) {
+	  console.log("channel info ----------------------------");
+	  console.log(data);
+
+	  var markup = cardtemplate
+	    .replace("{{STREAMTITLE}}", data.display_name)
+	    .replace("{{STREAMTEXT}}", data.status)
+	    .replace("{{STREAMIMAGE}}", data.logo);
+	  $(markup).appendTo(streams);
+
+	}).fail(function() {
+	  console.log('getting channel info failed');
+	});
+      }
+
+      // var streams = $('#streams');
+      // for (var i=0; i < data.featured.length; i++) {
+      // 	var markup = cardtemplate
+      // 	    .replace("{{STREAMTITLE}}", data.featured[i].title)
+      // 	    .replace("{{STREAMTEXT}}", data.featured[i].text)
+      // 	    .replace("{{STREAMIMAGE}}", data.featured[i].image);
+      // 	$(markup).appendTo(streams);
+      // }
+    }).fail(function() {
+      console.log('call to', url, 'failed');
+    });
+
     $.getJSON(url, function(data) {
-      //console.log(data);
+      console.log("featured info---------------------------");
+      console.log(data);
       var streams = $('#streams');
-      console.log('streams:', streams);
       for (var i=0; i < data.featured.length; i++) {
-	$(cardtemplate.replace("{{STREAMTITLE}}", data.featured[i].title)).appendTo(streams);
+	var markup = cardtemplate
+	    .replace("{{STREAMTITLE}}", data.featured[i].title)
+	    .replace("{{STREAMTEXT}}", data.featured[i].text)
+	    .replace("{{STREAMIMAGE}}", data.featured[i].image);
+	$(markup).appendTo(streams);
       }
     }).fail(function() {
       console.log('call to', url, 'failed');
